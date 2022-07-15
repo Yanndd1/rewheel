@@ -4,15 +4,11 @@ The current steps are technically dense and not for the faint of heart. There's 
 
 ## Exploit for bypassing STM32 Read Out Protection
 
-Look into the H3 exploit
+- To learn more about how we're dumping the firmware, check out [https://www.usenix.org/system/files/woot20-paper-obermaier.pdf](https://www.usenix.org/system/files/woot20-paper-obermaier.pdf). We'll be using the H3 exploit outlined in that research paper.
 
-[https://www.usenix.org/system/files/woot20-paper-obermaier.pdf](https://www.usenix.org/system/files/woot20-paper-obermaier.pdf)
+- For ease of use, you can use my forked and patched version of the exploit: [https://github.com/outlandnish/f103-analysis](https://github.com/outlandnish/f103-analysis)
 
-Code repository
-
-[https://github.com/JohannesObermaier/f103-analysis](https://github.com/JohannesObermaier/f103-analysis)
-
-- Use the H3 exploit. The easiest setup is using a STM32F3DISCOVERY board: [https://www.st.com/en/evaluation-tools/stm32f3discovery.html#sample-buy](https://www.st.com/en/evaluation-tools/stm32f3discovery.html#sample-buy)
+- If you don't want to re-write code, use the STM32F3DISCOVERY board mentioned in the research paper as the attack board: [https://www.st.com/en/evaluation-tools/stm32f3discovery.html#sample-buy](https://www.st.com/en/evaluation-tools/stm32f3discovery.html#sample-buy)
     - Can be purchased on Amazon, Digikey, Mouser, etc.
 
 ## Pre-requisites
@@ -20,6 +16,7 @@ Code repository
 - openocd 0.11.0 or higher
 - Some sort of serial monitor that can send data to the chip
     - I used the PlatformIO Serial Monitor with the log2file filter
+- STM32F3DISCOVERY board (or equivalent)
 
 ## Steps
 
@@ -30,7 +27,7 @@ Code repository
     1. Example for Pint: [https://www.amazon.com/SETCTOP-TQFP64-ProgrammerSocket-Adapter-Burning/dp/B097LFT741/ref=sr_1_1?crid=2UJQZNAGALA8U&keywords=lqfp64+socket&qid=1656449143&sprefix=lqfp64+socket%2Caps%2C74&sr=8-1](https://www.amazon.com/SETCTOP-TQFP64-ProgrammerSocket-Adapter-Burning/dp/B097LFT741/ref=sr_1_1?crid=2UJQZNAGALA8U&keywords=lqfp64+socket&qid=1656449143&sprefix=lqfp64+socket%2Caps%2C74&sr=8-1)
 3. Follow wiring instructions from the H3 exploit above to connect the STM32F3DISCOVERY board to the programming socket. **NOTE: All VDD, VDDA, VSS, VSSA pins need 3.3V and GND respectively for the chip to power up properly.**
 
-## STM32F103x Pin Mapping
+### STM32F103x Pin Mapping
 
 | Function | Label | Pint (LQFP64) | XR (LQFP100) |
 | --- | --- | --- | --- |
