@@ -53,12 +53,16 @@ The current steps are technically dense and not for the faint of heart. There's 
 
 Note: it's helpful to use a breadboard with Power + Ground rails to simplify wiring of the 3V3 and GND lines
 
-4. Use my fork of the H3 exploit from this repository: https://github.com/outlandnish/f103-analysis. It'll allow for dumping the firmware eaiser. Follow the instructions listed in the H3 exploit to connect to the chip.
-- I used the PlatformIO serial monitor with the log2file filter to save the serial communication to a file. This can be done with `pio device monitor -b 9600 -f log2file`
+4. Connect to the your Pint / XR controller STM32 inside of the programming socket using OpenOCD. You need to load the exploit (shellcode.bin) as outlined in the H3 exploit instructions (copied here for reference):
+  - telnet localhost 4444 (or whatever port you're using for OpenOCD's debugger)
+  - load_image shellcode.bin 0x20000000 (you need shellcode.bin from the `h3/rootshell` directory of the f103-analysis repo)
 
-5. Once you've got serial communications with the STM32 (you should see `Low-Level Shell v0.1 alpha`, type `F 0 1` to dump the flash contents without offsets in Little Endian order
+4. Use a serial monitor to capture serial communication with the chip to a file. I used the PlatformIO serial monitor with the log2file filter to save the serial communication to a file. This can be done with `pio device monitor -b 9600 -f log2file`
+  - Serial config: 9600 baud, 8 bits, no parity, 1 stop bit
 
-5. Once the dump is complete, clean up the file using a text editor. Remove extra spaces from the top and bottom (including the help / title content). Your first line in the file should be the first line of the dump.
+5. You should see `Low-Level Shell v0.1 alpha` if you connected successfully. Type `F01` and hit Enter to dump the flash contents without offsets in Little Endian order.
+
+5. Clean up the file using a text editor. Remove extra spaces from the top and bottom (including the help / title content). Your first line in the file should be the first line of the dump.
 
 6. Run the log file through `xd` to convert it into a binary file: `xd -r -p dump.log app.bin`
 
