@@ -1,5 +1,5 @@
 # Rewheel
-Firmware modification tools for the Onewheel Pint, Pint X and XR
+Firmware modification tools for the Onewheel Pint, Pint X and XR. Part of the R2Row ('Arturo') project.
 
 ## Requirements
 - Node.js
