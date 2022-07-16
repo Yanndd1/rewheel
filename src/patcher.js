@@ -29,12 +29,12 @@ const applyPatch = (firmware, patch) => {
 try {
   let firmware = fs.readFileSync(inputFile)
 
-  for (let operation of requestedOperations) {
+  requestedOperations.forEach(operation => {
     const patch = patches[operation]
 
     console.log('applying', operation, '...')
     firmware = applyPatch(firmware, patch)
-  }
+  })
 
   fs.writeFileSync(outputPath, firmware)
   console.log('complete. patched binary saved as', outputPath)
