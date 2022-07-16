@@ -12,10 +12,10 @@ const inputFile = args[0]
 const extension = inputFile.lastIndexOf('.')
 const pathParts = [inputFile.substring(0, extension), inputFile.substring(extension)]
 const outputPath = `${pathParts[0]}-patched.bin`
-const requestedOperations = args.slice(1)
+const requestedOperations = args.slice(1).filter(operation => patches[operation] !== undefined)
 
 if (requestedOperations.length == 0) {
-  console.warn('No patches requested. Exiting')
+  console.warn('No valid patches requested. Exiting')
   exit(0)
 }
 
@@ -30,14 +30,10 @@ try {
   let firmware = fs.readFileSync(inputFile)
 
   for (let operation of requestedOperations) {
-    if (patches[operation] !== undefined) {
-      const patch = patches[operation]
+    const patch = patches[operation]
 
-      console.log('applying', operation, '...')
-      firmware = applyPatch(firmware, patch)
-    }
-    else
-      console.warn('did not find operation', operation)
+    console.log('applying', operation, '...')
+    firmware = applyPatch(firmware, patch)
   }
 
   fs.writeFileSync(outputPath, firmware)
