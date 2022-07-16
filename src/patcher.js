@@ -29,10 +29,10 @@ const applyPatch = (firmware, patch) => {
 try {
   let firmware = fs.readFileSync(inputFile)
 
-  requestedOperations.forEach(operation => {
+  requestedOperations.forEach((operation, index) => {
     const patch = patches[operation]
 
-    console.log('applying', operation, '...')
+    console.log(`applying patch (${index + 1}/${requestedOperations.length}) - ${operation}`)
     firmware = applyPatch(firmware, patch)
   })
 
