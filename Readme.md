@@ -16,6 +16,9 @@ You'll find all patches you can use with the firmware patcher here. More to come
 #### `removeBmsIdCheck`
 Resolves Error 22 by removing the BMS serial ID check. Tested against 5046 on a Pint.
 
+#### `enableChargeAndRide`
+Resolves Error 21 by removing the charger connected check. **Untested / experimental: use with caution.**
+
 ## Disclaimer
 - Firmware is not provided for copyright reasons. You will need to dump the firmware from a Onewheel that you own and then flash it back. Instructions are provided [here](docs/DumpFirmware.md). **Warning: it's not for the faint of heart.**
 - Firmware dumping process hasn't yet been tried for the GT. Since it uses an STM32F4, a different exploit needs to be written.
