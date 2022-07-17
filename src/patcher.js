@@ -5,6 +5,10 @@ const args = process.argv.slice(2)
 
 if (args.length < 1) {
   console.log('usage: node patcher [input file] [...patches]')
+  console.log('available patches:')
+  for (let patch of Object.keys(patches)) {
+    console.log(`\t${patch}\t${patches[patch].description}`)
+  }
   exit(-1)
 }
 
