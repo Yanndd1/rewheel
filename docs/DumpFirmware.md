@@ -60,9 +60,9 @@ Note: it's helpful to use a breadboard with Power + Ground rails to simplify wir
 4. Use a serial monitor to capture serial communication with the chip to a file. I used the PlatformIO serial monitor with the log2file filter to save the serial communication to a file. This can be done with `pio device monitor -b 9600 -f log2file`
   - Serial config: 9600 baud, 8 bits, no parity, 1 stop bit
 
-5. You should see `Low-Level Shell v0.1 alpha` if you connected successfully. Type `F01` and hit Enter to dump the flash contents without offsets in Little Endian order.
+5. Close OpenOCD. Press the blue button on the STM32F3DISCOVERY Board. You should see `Low-Level Shell v0.1 alpha` if you've connected successfully. Type `F01` and hit Enter to dump the flash contents without offsets in Little Endian order.
 
-5. Clean up the file using a text editor. Remove extra spaces from the top and bottom (including the help / title content). Your first line in the file should be the first line of the dump.
+5. Clean up the file using a text editor. Remove extra spaces from the top and bottom (including the help / title content). Your first line of the file should be the first line of the dump and the last line of the file should be the last line of the dump.
 
 6. Run the log file through `xd` to convert it into a binary file: `xd -r -p dump.log app.bin`
 
