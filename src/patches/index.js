@@ -1,13 +1,7 @@
 // known to work on 5046. Hasn't been checked for other versions
 
-const padNops = (count) => {
-  const nops = Array(count * 2)
-  for (let i = 0; i < count; i++) {
-    nops.push(0x00)
-    nops.push(0xBF)
-  }
-  return nops
-}
+const nop = [0x00, 0xBF]
+const padNops = (data, count) => count == 0 ? data : padNops(data.concat(nop), count - 1)
 
 const removeBmsIdCheck = {
   description: 'Allows you to use any BMS (disables Error 22 for incorrect serial ID)',
