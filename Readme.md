@@ -28,8 +28,8 @@ Resolves Error 21 by removing the charger connected check. **Untested / experime
 - Instructions to flash your Onewheel are located [here](docs/FlashFirmware.md). Thankfully, this is significantly easier than dumping the firmware to begin with.
 
 ## Disclaimer
-- Firmware is not provided for copyright reasons. You will need to dump the firmware from a Onewheel that you own and then flash it back. Instructions are provided [here](docs/DumpFirmware.md). **Warning: it's not for the faint of heart.**
 - Firmware dumping process hasn't yet been tried for the GT. Since it uses an STM32F4, a different exploit needs to be written.
+- This project is not affiliated with or endorsed by Future Motion. Proceed at your own risk. 
 
 ## Contributing
 If you're able to dump the firmware from a Onewheel that you own, you can use Ghidra to dive into the assembly and even live debug against a working Pint, Pint X, or XR. This can aid in finding more patches for the firmware.
