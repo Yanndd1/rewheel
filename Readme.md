@@ -29,7 +29,7 @@ Resolves Error 21 by removing the charger connected check. **Untested / experime
 
 ## Disclaimer
 - Firmware dumping process hasn't yet been tried for the GT. Since it uses an STM32F4, a different exploit needs to be written.
-- This project is not affiliated with or endorsed by Future Motion. Proceed at your own risk. 
+- This project is not affiliated with or endorsed by Future Motion. Proceed at your own risk - this will void your warranty.
 
 ## Contributing
 If you're able to dump the firmware from a Onewheel that you own, you can use Ghidra to dive into the assembly and even live debug against a working Pint, Pint X, or XR. This can aid in finding more patches for the firmware.
