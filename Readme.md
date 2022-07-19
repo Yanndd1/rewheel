@@ -22,7 +22,7 @@ Converts the Pint's Redwood riding mode into the XR's Sequoia riding mode.
 #### `convertSkylineToDelirium`
 Converts the Pint's Skyline riding mode into the XR's Delirium riding mode.
 
-#### `convertPintOtherModesToXRModes`
+#### `convertPintModesToXRModes`
 Converts the Pint's Pacific and Elevated riding modes into the XR's Mission and Elevated riding modes.  
 
 ## Reading and Writing Firmware
