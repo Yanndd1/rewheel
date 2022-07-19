@@ -4,7 +4,7 @@ const patches = require('./patches')
 const args = process.argv.slice(2)
 
 if (args.length < 1) {
-  console.log('usage: node patcher [input file] [...patches]')
+  console.log('\x1b[1musage: node patcher [input file] [...patches]\x1b[0m')
   console.log('\n\x1b[4mavailable patches\x1b[0m:')
   for (let patch of Object.keys(patches)) {
     console.log(`\x1b[32m${patch}\x1b[0m: ${patches[patch].description}`)
