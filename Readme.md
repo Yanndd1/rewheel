@@ -17,13 +17,13 @@ You'll find all patches you can use with the firmware patcher here. More to come
 Resolves Error 22 by removing the BMS serial ID check. Tested against 5046 on a Pint.
 
 #### `convertRedwoodToSequoia`
-Converts the Pint's Redwood riding mode into the XR's Sequoia riding mode.
+Converts the Pint's Redwood riding mode into the XR's Sequoia riding mode. Tested against 5046 on a Pint.
 
 #### `convertSkylineToDelirium`
-Converts the Pint's Skyline riding mode into the XR's Delirium riding mode.
+Converts the Pint's Skyline riding mode into the XR's Delirium riding mode. Tested against 5046 on a Pint.
 
 #### `convertPintModesToXRModes`
-Converts the Pint's Pacific and Elevated riding modes into the XR's Mission and Elevated riding modes.  
+Converts the Pint's Pacific and Elevated riding modes into the XR's Mission and Elevated riding modes. Tested against 5046 on a Pint.
 
 ## Reading and Writing Firmware
 
