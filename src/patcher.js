@@ -5,10 +5,11 @@ const args = process.argv.slice(2)
 
 if (args.length < 1) {
   console.log('usage: node patcher [input file] [...patches]')
-  console.log('available patches:')
+  console.log('\n\x1b[4mavailable patches\x1b[0m:')
   for (let patch of Object.keys(patches)) {
-    console.log(`\t${patch}\t${patches[patch].description}`)
+    console.log(`\x1b[32m${patch}\x1b[0m: ${patches[patch].description}`)
   }
+  console.log('')
   exit(-1)
 }
 
@@ -24,8 +25,10 @@ if (requestedOperations.length == 0) {
 }
 
 const applyPatch = (firmware, patch) => {
-  for (let offset = 0; offset < patch.data.length; offset++) {
-    firmware.writeUInt8(patch.data[offset], patch.start + offset)
+  for (let mod of patch.modifications) {
+    for (let offset = 0; offset < mod.data.length; offset++) {
+      firmware.writeUInt8(mod.data[offset], mod.start + offset)
+    }
   }
   return firmware
 }

@@ -16,8 +16,14 @@ You'll find all patches you can use with the firmware patcher here. More to come
 #### `removeBmsIdCheck`
 Resolves Error 22 by removing the BMS serial ID check. Tested against 5046 on a Pint.
 
-#### `enableChargeAndRide`
-Resolves Error 21 by removing the charger connected check. **Untested / experimental: use with caution.**
+#### `convertRedwoodToSequoia`
+Converts the Pint's Redwood riding mode into the XR's Sequoia riding mode.
+
+#### `convertSkylineToDelirium`
+Converts the Pint's Skyline riding mode into the XR's Delirium riding mode.
+
+#### `convertPintOtherModesToXRModes`
+Converts the Pint's Pacific and Elevated riding modes into the XR's Mission and Elevated riding modes.  
 
 ## Reading and Writing Firmware
 
