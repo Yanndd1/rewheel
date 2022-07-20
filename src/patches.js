@@ -1,7 +1,4 @@
 // known to work on 5046. Hasn't been checked for other versions
-
-const { Console } = require("console")
-
 const nop = [0x00, 0xBF]
 const padNops = (data, count) => count == 0 ? data : padNops(data.concat(nop), count - 1)
 
