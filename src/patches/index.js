@@ -1,5 +1,7 @@
 // known to work on 5046. Hasn't been checked for other versions
 
+const { Console } = require("console")
+
 const nop = [0x00, 0xBF]
 const padNops = (data, count) => count == 0 ? data : padNops(data.concat(nop), count - 1)
 
@@ -45,6 +47,10 @@ const convertSkylineToDelirium = {
     {
       start: 0xAB3E,
       data: [0x63]
+    },
+    {
+      start: 0xAB36,
+      data: [0x0A]
     }
   ]
 }
@@ -59,9 +65,37 @@ const convertPintModesToXRModes = {
   ]
 }
 
+const setSerialNumber = {
+  description: `Sets the serial number of the Onewheel`,
+  args: { serialNumber: 'The new serial number in the format: OW123456' },
+  modifications: (args) => {
+    let normalized = args.serialNumber.replace('OW', '')
+    if (normalized.length > 6)
+      throw 'invalid serial number - must be 6 digit number optionally preceded by OW'
+
+    normalized = parseInt(normalized)
+    const scalar = Math.floor(normalized / 0x10000)
+    const remainder = normalized % (0x10000 * scalar)
+    const buffer = new Uint8Array(2)
+    const view = new DataView(buffer.buffer, 0, 2)
+    view.setUint16(0, remainder, true)
+    return [
+      {
+        start: 0xFC30,
+        data: [scalar]
+      },
+      {
+        start: 0xFC0A,
+        data: Array.from(buffer)
+      }
+    ]
+  }
+}
+
 module.exports = {
   removeBmsIdCheck,
   convertRedwoodToSequoia,
   convertSkylineToDelirium,
-  convertPintModesToXRModes
+  convertPintModesToXRModes,
+  setSerialNumber
 }
