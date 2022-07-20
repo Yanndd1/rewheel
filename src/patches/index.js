@@ -65,31 +65,58 @@ const convertPintModesToXRModes = {
   ]
 }
 
-const setSerialNumber = {
-  description: `Sets the serial number of the Onewheel`,
-  args: { serialNumber: 'The new serial number in the format: OW123456' },
-  modifications: (args) => {
-    let normalized = args.serialNumber.replace('OW', '')
-    if (normalized.length > 6)
-      throw 'invalid serial number - must be 6 digit number optionally preceded by OW'
+const restoreData = {
+  description: `Restores the serial number and mileage of the Onewheel after flash has been wiped`,
+  args: {
+    serialNumber: 'The new serial number in the format: OW123456',
+    mileage: 'The mileage that the board has accumulated'
+  },
+  modifications: ({ serialNumber, mileage }) => [...restoreSerialNumber(serialNumber), ...restoreMileage(mileage)]
+}
 
-    normalized = parseInt(normalized)
-    const scalar = Math.floor(normalized / 0x10000)
-    const remainder = normalized % (0x10000 * scalar)
-    const buffer = new Uint8Array(2)
-    const view = new DataView(buffer.buffer, 0, 2)
-    view.setUint16(0, remainder, true)
-    return [
-      {
-        start: 0xFC30,
-        data: [scalar]
-      },
-      {
-        start: 0xFC0A,
-        data: Array.from(buffer)
-      }
-    ]
-  }
+/*
+divide number % 0x10000 (65536) = scalar => store at 0x0800fc30
+subtract 0x10000 * scalar from serial number
+store remainder at uint16 in LE format at 0x0800fc0a
+*/
+const restoreSerialNumber = (serialNumber) => {
+  let normalized = serialNumber.replace('OW', '')
+  if (normalized.length > 6)
+    throw 'invalid serial number - must be 6 digit number optionally preceded by OW'
+
+  normalized = parseInt(normalized)
+  const scalar = Math.floor(normalized / 0x10000)
+  const remainder = normalized % (0x10000 * scalar)
+  const buffer = new Uint8Array(2)
+  const view = new DataView(buffer.buffer, 0, 2)
+  view.setUint16(0, remainder, true)
+  return [
+    {
+      start: 0xFC30,
+      data: [scalar]
+    },
+    {
+      start: 0xFC0A,
+      data: Array.from(buffer)
+    }
+  ]
+}
+
+/*
+(not the complete mileage solution but practically correct up to 2,372,910 miles)
+multiple mileage by 0x712
+store at 0x0800fc0c as uint32 in LE
+*/
+const restoreMileage = (mileage) => {
+  const buffer = new Uint8Array(4)
+  const view = new DataView(buffer.buffer, 0, 4)
+  view.setUint32(0, mileage * 0x712, true)
+  return [
+    {
+      start: 0xFC0C,
+      data: Array.from(buffer)
+    }
+  ]
 }
 
 module.exports = {
@@ -97,5 +124,5 @@ module.exports = {
   convertRedwoodToSequoia,
   convertSkylineToDelirium,
   convertPintModesToXRModes,
-  setSerialNumber
+  restoreData
 }

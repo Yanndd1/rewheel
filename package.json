@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "patcher": "node src/index"
+  },
   "dependencies": {
     "minimist": "^1.2.6"
   }

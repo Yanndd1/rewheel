@@ -13,6 +13,15 @@ node src/patcher [input file] [...patches]
 ### Available Patches
 You'll find all patches you can use with the firmware patcher here. More to come soon.
 
+#### `restoreData`
+Restores serial number and mileage after the flash has been wiped (required to disable Read Out Protection)
+
+##### Arguments
+```
+serialNumber - 6 digit serial number preceded by OW (e.g. OW123456)
+mileage - lifetime odometer reading in miles
+```
+
 #### `removeBmsIdCheck`
 Resolves Error 22 by removing the BMS serial ID check. Tested against 5046 on a Pint.
 
