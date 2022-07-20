@@ -28,7 +28,7 @@ const convertSkylineToDelirium = {
   modifications: [
     {
       start: 0xAAFE,
-      data: [0xFF]
+      data: [0x0A]
     },
     {
       start: 0xAAE2,
@@ -36,7 +36,7 @@ const convertSkylineToDelirium = {
     },
     {
       start: 0xAAe6,
-      data: [0x84, 0x71]
+      data: [0x84, 0x67]
     },
     {
       start: 0xAB3A,
@@ -54,11 +54,7 @@ const convertPintModesToXRModes = {
   modifications: [
     {
       start: 0xA9A6,
-      data: [0xFF]
-    },
-    {
-      start: 0xA9AC,
-      data: [0x34]
+      data: [0x0A]
     }
   ]
 }
