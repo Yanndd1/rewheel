@@ -14,7 +14,7 @@ The current steps are technically dense and not for the faint of heart. There's 
 ## Pre-requisites
 
 - openocd 0.11.0 or higher
-- Some sort of serial monitor that can send data to the chip
+- Any UART serial monitor
     - I used the PlatformIO Serial Monitor with the log2file filter
 - STM32F3DISCOVERY board (or equivalent)
 
