@@ -45,17 +45,7 @@ const convertSkylineToDelirium = {
       start: {
         5046: 0xAAe6
       },
-      data: [0x84, 0x67]
-    },
-    {
-      start: {
-        5046: 0xAB3A
-      },
-      data: [0xC0]
-    },
-    {
-      start: { 5046: 0xAB3E },
-      data: [0x63]
+      data: [0x84, 0x71]
     },
     {
       start: {
