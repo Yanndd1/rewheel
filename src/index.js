@@ -4,12 +4,13 @@ const patches = require('./patches')
 const { checksumForFirmware, matchFirmwareRevision } = require('./utils/generate-checksum')
 const args = require('minimist')(argv.slice(2))
 
-if (args.help || (!args.f || args.firmware)) {
-  console.log('\x1b[1musage: yarn patcher -f [input file] -o [output file] [...patches] [...args]\x1b[0m')
-  console.log('\n\x1b[4mavailable patches\x1b[0m:')
+const printUsage = () => {
+  // list out all available patches
   for (let patch of Object.keys(patches)) {
     console.log(`\x1b[32m${patch}\x1b[0m - ${patches[patch].description}`)
     const args = patches[patch].args
+
+    // list out args
     if (args) {
       for (let arg of Object.keys(args)) {
         console.log(` - \x1b[33m${arg}\x1b[0m: ${args[arg]}`)
@@ -17,18 +18,6 @@ if (args.help || (!args.f || args.firmware)) {
     }
   }
   console.log('')
-  exit(0)
-}
-
-const inputFile = args.f || args.firmware
-const extension = inputFile.lastIndexOf('.')
-const pathParts = [inputFile.substring(0, extension), inputFile.substring(extension)]
-const outputPath = args.o || args.output || `${pathParts[0]}-patched.bin`
-const requestedOperations = args._.filter(operation => patches[operation] !== undefined)
-
-if (requestedOperations.length == 0) {
-  console.warn('no valid patches applied')
-  exit(0)
 }
 
 const applyPatch = (firmware, revision, patch) => {
@@ -45,7 +34,24 @@ const applyPatch = (firmware, revision, patch) => {
       firmware.writeUInt8(mod.data[offset], mod.start[revision] + offset)
     }
   }
+
   return firmware
+}
+
+if (args.help || (!args.f || args.firmware)) {
+  printUsage()
+  exit(0)
+}
+
+const inputFile = args.f || args.firmware
+const extension = inputFile.lastIndexOf('.')
+const pathParts = [inputFile.substring(0, extension), inputFile.substring(extension)]
+const outputPath = args.o || args.output || `${pathParts[0]}-patched.bin`
+const requestedOperations = args._.filter(operation => patches[operation] !== undefined)
+
+if (requestedOperations.length == 0) {
+  console.warn('no valid patches applied')
+  exit(0)
 }
 
 try {
