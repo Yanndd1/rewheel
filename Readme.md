@@ -7,7 +7,7 @@ Firmware modification tools for the Onewheel Pint, Pint X and XR. Part of the R2
 ## Firmware Patcher
 ### Usage
 ```
-node src/patcher [input file] [...patches]
+node src/patcher -i [input file] -o [output file] [...patches]
 ```
 
 ### Available Patches
