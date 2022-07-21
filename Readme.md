@@ -38,7 +38,7 @@ Converts the Pint's Skyline riding mode into the XR's Delirium riding mode. Test
 #### `convertPintModesToXRModes`
 Converts the Pint's Pacific and Elevated riding modes into the XR's Mission and Elevated riding modes. Tested against 5046 on a Pint.
 
-## Reading and Writing Firmware
+## Firmware Operations
 
 ### Dumping Firmware
 - Firmware is not provided for copyright reasons. Instructions for dumping your Onewheel firmware are provided [here](docs/DumpFirmware.md). **Warning: it's not for the faint of heart.**
