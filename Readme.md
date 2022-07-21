@@ -3,11 +3,17 @@ Firmware modification tools for the Onewheel Pint, Pint X and XR. Part of the R2
 
 ## Requirements
 - Node.js
+- Yarn (optional)
 
 ## Firmware Patcher
 ### Usage
 ```
-node src/patcher -i [input file] -o [output file] [...patches]
+# npm
+npm patcher -f [input file] -o [output file] [...patches]
+
+# yarn
+yarn patcher -f [input file] -o [output file] [...patches]
+
 ```
 
 ### Available Patches
@@ -39,6 +45,19 @@ Converts the Pint's Pacific and Elevated riding modes into the XR's Mission and 
 
 ### Flashing Firmware
 - Instructions to flash your Onewheel are located [here](docs/FlashFirmware.md). Thankfully, this is significantly easier than dumping the firmware to begin with.
+
+### Generate Checksum for Firmware
+```
+# npm
+npm checksum -f [input file]
+
+# yarn
+yarn checksum -f [input file]
+```
+
+The patcher uses the checksum of the firmware to set the offsets of each firmware patch. 
+
+If your firmware doesn't match a known checksum, open a GitHub issue for it. That way, we can find the offsets for that firmware revision and support more firmware.
 
 ## Disclaimer
 - Firmware dumping process hasn't yet been tried for the GT. Since it uses an STM32F4, a different exploit needs to be written.
