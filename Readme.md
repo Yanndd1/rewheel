@@ -38,7 +38,7 @@ Converts the Pint's Skyline riding mode into the XR's Delirium riding mode. Test
 #### `convertPintModesToXRModes`
 Converts the Pint's Pacific and Elevated riding modes into the XR's Mission and Elevated riding modes. Tested against 5046 on a Pint.
 
-## Reading and Writing Firmware
+## Firmware Operations
 
 ### Dumping Firmware
 - Firmware is not provided for copyright reasons. Instructions for dumping your Onewheel firmware are provided [here](docs/DumpFirmware.md). **Warning: it's not for the faint of heart.**
@@ -57,7 +57,7 @@ yarn checksum -f [input file]
 
 The patcher uses the checksum of the firmware to set the offsets of each firmware patch. 
 
-If your firmware doesn't match a known checksum, open a GitHub issue for it. That way, we can find the offsets for that firmware revision and support more firmware.
+If your firmware doesn't match a known checksum, [open an issue](https://github.com/outlandnish/rewheel/issues/new?assignees=&labels=new-firmware-revision&template=support-new-firmware-revision.md&title=Add+support+for+firmware+%3Crevision%3E) for it. That way, we can find the offsets for that firmware revision and support more firmware.
 
 ## Disclaimer
 - Firmware dumping process hasn't yet been tried for the GT. Since it uses an STM32F4, a different exploit needs to be written.
