@@ -1,10 +1,11 @@
 const fs = require('fs')
 const { exit, argv } = require('process')
 const patches = require('./patches')
+const { checksumForFirmware, matchFirmwareRevision } = require('./utils/generate-checksum')
 const args = require('minimist')(argv.slice(2))
 
 if (args.help || (!args.f || args.firmware)) {
-  console.log('\x1b[1musage: node patcher -f [input file] -o [output file] [...patches] [...args]\x1b[0m')
+  console.log('\x1b[1musage: yarn patcher -f [input file] -o [output file] [...patches] [...args]\x1b[0m')
   console.log('\n\x1b[4mavailable patches\x1b[0m:')
   for (let patch of Object.keys(patches)) {
     console.log(`\x1b[32m${patch}\x1b[0m - ${patches[patch].description}`)
@@ -16,7 +17,7 @@ if (args.help || (!args.f || args.firmware)) {
     }
   }
   console.log('')
-  exit(-1)
+  exit(0)
 }
 
 const inputFile = args.f || args.firmware
@@ -30,7 +31,7 @@ if (requestedOperations.length == 0) {
   exit(0)
 }
 
-const applyPatch = (firmware, patch) => {
+const applyPatch = (firmware, revision, patch) => {
   let modifications = []
 
   if (typeof patch.modifications === 'function') {
@@ -41,7 +42,7 @@ const applyPatch = (firmware, patch) => {
 
   for (let mod of modifications) {
     for (let offset = 0; offset < mod.data.length; offset++) {
-      firmware.writeUInt8(mod.data[offset], mod.start + offset)
+      firmware.writeUInt8(mod.data[offset], mod.start[revision] + offset)
     }
   }
   return firmware
@@ -49,6 +50,14 @@ const applyPatch = (firmware, patch) => {
 
 try {
   let firmware = fs.readFileSync(inputFile)
+  const checksum = checksumForFirmware('sha1', firmware.buffer)
+  const firmwareRevision = matchFirmwareRevision(checksum)
+
+  if (firmwareRevision === 'undefined')
+    throw `firmware checksum ${checksum} doesn't match a known revision: `
+
+  console.log('firmware match:', firmwareRevision)
+
   let appliedPatches = 0
   requestedOperations.forEach((operation, index) => {
     try {
@@ -66,7 +75,7 @@ try {
 
       // apply patch
       console.log(`applying patch (${index + 1}/${requestedOperations.length}) - \x1b[32m${operation}\x1b[37m`)
-      firmware = applyPatch(firmware, patch)
+      firmware = applyPatch(firmware, firmwareRevision, patch)
       appliedPatches++
     }
     catch (err) {

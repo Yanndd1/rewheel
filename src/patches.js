@@ -6,7 +6,9 @@ const removeBmsIdCheck = {
   description: 'Allows you to use any BMS (disables Error 22 for incorrect serial ID)',
   modifications: [
     {
-      start: 0xED26,
+      start: {
+        5046: 0xED26
+      },
       data: padNops([0x10, 0x45, 0x08, 0x45], 11)
     }
   ]
@@ -16,7 +18,9 @@ const convertRedwoodToSequoia = {
   description: `Gives Pint's Redwood the characteristics of XR's Sequoia`,
   modifications: [
     {
-      start: 0xA912,
+      start: {
+        5046: 0xA912
+      },
       data: [0x33, 0x40]
     }
   ]
@@ -26,27 +30,37 @@ const convertSkylineToDelirium = {
   description: `Gives Pint's Skyline the characteristics of XR's Delirium`,
   modifications: [
     {
-      start: 0xAAFE,
+      start: {
+        5046: 0xAAFE
+      },
       data: [0x0A]
     },
     {
-      start: 0xAAE2,
+      start: {
+        5046: 0xAAE2
+      },
       data: [0x88, 0x30]
     },
     {
-      start: 0xAAe6,
+      start: {
+        5046: 0xAAe6
+      },
       data: [0x84, 0x67]
     },
     {
-      start: 0xAB3A,
+      start: {
+        5046: 0xAB3A
+      },
       data: [0xC0]
     },
     {
-      start: 0xAB3E,
+      start: { 5046: 0xAB3E },
       data: [0x63]
     },
     {
-      start: 0xAB36,
+      start: {
+        5046: 0xAB36
+      },
       data: [0x0A]
     }
   ]
@@ -56,7 +70,9 @@ const convertPintModesToXRModes = {
   description: `Gives Pint's Pacific and Elevated the characteristics of XR's Mission and Elevated`,
   modifications: [
     {
-      start: 0xA9A6,
+      start: {
+        5046: 0xA9A6
+      },
       data: [0x0A]
     }
   ]
@@ -87,13 +103,18 @@ const restoreSerialNumber = (serialNumber) => {
   const buffer = new Uint8Array(2)
   const view = new DataView(buffer.buffer, 0, 2)
   view.setUint16(0, remainder, true)
+
   return [
     {
-      start: 0xFC30,
+      start: {
+        5046: 0xFC30
+      },
       data: [scalar]
     },
     {
-      start: 0xFC0A,
+      start: {
+        5046: 0xFC0A
+      },
       data: Array.from(buffer)
     }
   ]
@@ -110,7 +131,9 @@ const restoreMileage = (mileage) => {
   view.setUint32(0, mileage * 0x712, true)
   return [
     {
-      start: 0xFC0C,
+      start: {
+        5046: 0xFC0C
+      },
       data: Array.from(buffer)
     }
   ]
