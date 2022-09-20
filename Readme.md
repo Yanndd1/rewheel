@@ -38,6 +38,19 @@ Converts the Pint's Skyline riding mode into the XR's Delirium riding mode. Test
 #### `convertPintModesToXRModes`
 Converts the Pint's Pacific and Elevated riding modes into the XR's Mission and Elevated riding modes. Tested against 5046 on a Pint.
 
+#### `increasePintAggressiveness`
+Increases the base level aggressiveness for the Pint to match the XR (potentially affects speed?).
+
+#### `changeElevatedAngle`
+Changes for forward and backward angles for Elevated mode
+
+##### Arguments
+- `forwardAngle` - Angle of lift for going forwards (positive values only to a max of 20 with up to hundredth precision)
+- `backwardAngle` - Angle of lift for going backwards (positive values only to a max of 20 with up to hundredth precision)
+
+#### `enableCustomShaping`
+Allows Pint to toggle into custom shaping (untested, probably still needs some work)
+
 ## Firmware Operations
 
 ### Dumping Firmware

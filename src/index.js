@@ -38,12 +38,12 @@ const applyPatch = (firmware, revision, patch) => {
   return firmware
 }
 
-if (args.help || (!args.f || args.firmware)) {
+if (args.help || (!args.i || args.input)) {
   printUsage()
   exit(0)
 }
 
-const inputFile = args.f || args.firmware
+const inputFile = args.i || args.input
 const extension = inputFile.lastIndexOf('.')
 const pathParts = [inputFile.substring(0, extension), inputFile.substring(extension)]
 const outputPath = args.o || args.output || `${pathParts[0]}-patched.bin`
