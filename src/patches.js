@@ -68,6 +68,24 @@ const convertPintModesToXRModes = {
   ]
 }
 
+const increasePintAggressiveness = {
+  descriptoin: `Gives the Pint the base aggressiveness of the XR (maybe top speed too?)`,
+  modifications: [
+    {
+      start: {
+        5046: 0xC3F6
+      },
+      data: [0xA4, 0x61]
+    },
+    {
+      start: {
+        5046: 0xC3FA
+      },
+      data: [0x61, 0x72]
+    }
+  ]
+}
+
 const restoreData = {
   description: `Restores the serial number and mileage of the Onewheel after flash has been wiped`,
   args: {
@@ -134,5 +152,6 @@ module.exports = {
   convertRedwoodToSequoia,
   convertSkylineToDelirium,
   convertPintModesToXRModes,
+  increasePintAggressiveness,
   restoreData
 }
