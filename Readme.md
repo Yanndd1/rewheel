@@ -62,10 +62,10 @@ Allows Pint to toggle into custom shaping (untested, probably still needs some w
 ### Generate Checksum for Firmware
 ```
 # npm
-npm checksum -f [input file]
+npm checksum -i [input file] -o [output file] ...patches
 
 # yarn
-yarn checksum -f [input file]
+yarn checksum -i [input file] -o [output file] ...patches
 ```
 
 The patcher uses the checksum of the firmware to set the offsets of each firmware patch. 
