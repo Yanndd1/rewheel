@@ -3,12 +3,12 @@ const { exit, argv } = require('process')
 const args = require('minimist')(argv.slice(2))
 const { checksumForFirmware, matchFirmwareRevision } = require('./utils/generate-checksum')
 
-if (args.help || (!args.f || args.firmware)) {
-  console.log('\x1b[1musage: yarn checksum -f [input file]\x1b[0m')
+if (args.help || (!args.i || args.input)) {
+  console.log('\x1b[1musage: yarn checksum -i [input file]\x1b[0m')
   exit(0)
 }
 
-const inputFile = args.f || args.firmware
+const inputFile = args.i || args.input
 
 try {
   const firmware = fs.readFileSync(inputFile)
