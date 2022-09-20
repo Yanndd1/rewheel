@@ -69,7 +69,7 @@ const convertPintModesToXRModes = {
 }
 
 const increasePintAggressiveness = {
-  descriptoin: `Gives the Pint the base aggressiveness of the XR (maybe top speed too?)`,
+  description: `Gives the Pint the base aggressiveness of the XR (maybe top speed too?)`,
   modifications: [
     {
       start: {
