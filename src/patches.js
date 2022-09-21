@@ -1,6 +1,12 @@
 const nop = [0x00, 0xBF]
 const padNops = (data, count) => count == 0 ? data : padNops(data.concat(nop), count - 1)
 
+const printArgs = (args) => {
+  for (let arg of Object.keys(args)) {
+    console.debug(` - \x1b[33m${arg}\x1b[0m: ${args[arg]}`)
+  }
+}
+
 const removeBmsIdCheck = {
   description: 'Allows you to use any BMS (disables Error 22 for incorrect serial ID)',
   modifications: [
@@ -129,8 +135,14 @@ const enableCustomShaping = {
 const restoreData = {
   description: `Restores the serial number and mileage of the Onewheel after flash has been wiped`,
   args: {
-    serialNumber: 'The new serial number in the format: OW123456',
-    mileage: 'The mileage that the board has accumulated'
+    serialNumber: {
+      description: 'The new serial number in the format: OW123456',
+      required: false
+    },
+    mileage: {
+      description: 'The mileage that the board has accumulated',
+      required: false
+    }
   },
   modifications: ({ serialNumber, mileage }) => [...restoreSerialNumber(serialNumber), ...restoreMileage(mileage)]
 }
@@ -141,11 +153,17 @@ subtract 0x10000 * scalar from serial number
 store remainder at uint16 in LE format at 0x0800fc0a
 */
 const restoreSerialNumber = (serialNumber) => {
+  if (!serialNumber)
+    return []
+
+  if (typeof serialNumber !== 'string' || serialNumber.length === 0)
+    throw 'invalid data as serial number. must be a string of the format OW123456 or 123456'
+
   let normalized = serialNumber.replace('OW', '')
   if (normalized.length > 6)
     throw 'invalid serial number - must be 6 digit number optionally preceded by OW'
 
-  console.debug(' - \x1b[33mserial number\x1b[0m:', normalized)
+  printArgs({ serialNumber: normalized })
 
   normalized = parseInt(normalized)
   const scalar = Math.floor(normalized / 0x10000)
@@ -176,10 +194,18 @@ multiple mileage by 0x712
 store at 0x0800fc0c as uint32 in LE
 */
 const restoreMileage = (mileage) => {
+  if (!mileage)
+    return []
+
+  if (typeof mileage !== 'number' || isNaN(mileage))
+    throw 'invalid mileage provided'
+
   const buffer = new Uint8Array(4)
   const view = new DataView(buffer.buffer, 0, 4)
   view.setUint32(0, mileage * 0x712, true)
-  console.debug(' - \x1b[33mmileage\x1b[0m:', mileage)
+
+  printArgs({ mileage })
+
   return [
     {
       start: {
@@ -190,6 +216,35 @@ const restoreMileage = (mileage) => {
   ]
 }
 
+const getAngleScalarAndRemainder = (angle, isNegative = false) => {
+  const normalized = isNegative ? 36000 - (angle * 100) : (angle * 100) + 36000
+  const scalar = Math.floor(normalized / 256) - 0x80  // - 0x80 hack. works for now but need to figure out actual math
+  const remainder = normalized % 256
+  return { scalar, remainder }
+}
+
+const getAngleAndBackwardAngle = (angle, backwardAngle) => {
+  angle = parseFloat(angle).toFixed(2)
+
+  if (backwardAngle)
+    backwardAngle = parseFloat(backwardAngle).toFixed(2)
+  else
+    backwardAngle = angle
+
+  printArgs({ angle, backwardAngle })
+
+  if (angle < 0 || angle > 32.00 || isNaN(angle))
+    throw `invalid angle: ${angle}. Must be between 0 and 32`
+
+  if (backwardAngle < 0 || backwardAngle > 32.00 || isNaN(backwardAngle))
+    throw `invalid backward angle: ${backwardAngle}. Must be between 0 and 32`
+
+  angle = getAngleScalarAndRemainder(angle)
+  backwardAngle = getAngleScalarAndRemainder(backwardAngle, true)
+
+  return { angle, backwardAngle }
+}
+
 /*
 calculate angles:
 (angle * 100) + 36000 / 256 => store in first byte
@@ -197,37 +252,27 @@ calculate angles:
 */
 
 const changeElevatedAngle = {
-  description: 'Test to change angle of elevated to 5 degrees instead of 3',
+  description: 'Changes the hold angle above level for Elevated',
   args: {
-    forwardAngle: 'Angle of lift for going forwards (positive values only to a max of 20 with up to hundredth precision)',
-    backwardAngle: 'Angle of lift for going backwards (positive values only to a max of 20 with up to hundredth precision)'
+    elevatedAngle: {
+      description: 'Angle above level for going forwards (up to 32.00 degrees)',
+      required: true
+    },
+    elevatedBackwardAngle: {
+      description: 'Angle above level for going backwards. Forward angle is used if not provided.',
+      required: false
+    }
   },
-  modifications: ({ forwardAngle, backwardAngle }) => {
-    forwardAngle = parseFloat(forwardAngle).toFixed(2)
-    backwardAngle = parseFloat(backwardAngle).toFixed(2)
-
-    console.log(' - \x1b[33mforward angle\x1b[0m:', forwardAngle)
-    console.log(' - \x1b[33mbackward angle\x1b[0m:', backwardAngle)
-
-    if (forwardAngle < 0 || forwardAngle > 20 || isNaN(forwardAngle))
-      throw `invalid forward angle: ${forwardAngle}. Must be between 0 and 20`
-
-    if (backwardAngle < 0 || backwardAngle > 20 || isNaN(backwardAngle))
-      throw `invalid backward angle: ${backwardAngle}. Must be between 0 and 20`
-
-    const forwardAngleNormalized = (forwardAngle * 100) + 36000
-    const backwardAngleNormalized = 36000 - (forwardAngle * 100)
-
-    const forwardAngleScalar = Math.floor(forwardAngleNormalized / 256)
-    const backwardAngleScalar = Math.floor(backwardAngleNormalized / 256)
-
-    const forwardAngleRemainder = forwardAngleNormalized % 256
-    const backwardAngleRemainder = backwardAngleNormalized % 256
+  modifications: ({ elevatedAngle, elevatedBackwardAngle }) => {
+    const {
+      angle: { scalar: forwardAngleScalar, remainder: forwardAngleRemainder },
+      backwardAngle: { scalar: backwardAngleScalar, remainder: backwardAngleRemainder }
+    } = getAngleAndBackwardAngle(elevatedAngle, elevatedBackwardAngle)
 
     return [
       {
         start: {
-          5046: 0x8522
+          5046: 0x8524
         },
         data: forwardAngleScalar
       },
@@ -253,6 +298,53 @@ const changeElevatedAngle = {
   }
 }
 
+const changeDeliriumSkylineAngle = {
+  description: 'Changes the hold angle above level for Delirium',
+  args: {
+    deliriumSkylineAngle: {
+      description: 'Angle above level for going forwards (up to 32.00 degrees)',
+      required: true
+    },
+    deliriumSkylineBackwardAngle: {
+      description: 'Angle above level for going backwards. Forward angle is used if not provided.',
+      required: false
+    }
+  },
+  modifications: ({ deliriumSkylineAngle, deliriumSkylineBackwardAngle }) => {
+    const {
+      angle: { scalar: forwardAngleScalar, remainder: forwardAngleRemainder },
+      backwardAngle: { scalar: backwardAngleScalar, remainder: backwardAngleRemainder }
+    } = getAngleAndBackwardAngle(deliriumSkylineAngle, deliriumSkylineBackwardAngle)
+
+    return [
+      {
+        start: {
+          5046: 0x855C
+        },
+        data: forwardAngleScalar
+      },
+      {
+        start: {
+          5046: 0x855E
+        },
+        data: forwardAngleRemainder
+      },
+      {
+        start: {
+          5046: 0x856E
+        },
+        data: backwardAngleScalar
+      },
+      {
+        start: {
+          5046: 0x8570
+        },
+        data: backwardAngleRemainder
+      }
+    ]
+  }
+}
+
 module.exports = {
   removeBmsIdCheck,
   restoreData,
@@ -261,5 +353,6 @@ module.exports = {
   convertPintModesToXRModes,
   increasePintAggressiveness,
   enableCustomShaping,
-  changeElevatedAngle
+  changeElevatedAngle,
+  changeDeliriumSkylineAngle,
 }

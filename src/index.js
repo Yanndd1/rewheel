@@ -13,7 +13,7 @@ const printUsage = () => {
     // list out args
     if (args) {
       for (let arg of Object.keys(args)) {
-        console.log(` - \x1b[33m${arg}\x1b[0m: ${args[arg]}`)
+        console.log(` - \x1b[33m${arg}\x1b[0m:${args[arg].required ? '' : ' \x1b[2m(optional)\x1b[0m'} ${args[arg].description}`)
       }
     }
   }
@@ -73,10 +73,10 @@ try {
       if (patch.args) {
         const missingArgs = []
         for (let arg of Object.keys(patch.args)) {
-          if (!args[arg]) missingArgs.push(arg)
+          if (!patch.args[arg] && patch.args[arg].required) missingArgs.push(arg)
         }
         if (missingArgs.length > 0)
-          throw `missing args \x1b[33m${missingArgs.join(',')}\x1b[37m`
+          throw `missing required args \x1b[33m${missingArgs.join(',')}\x1b[37m`
       }
 
       // apply patch
