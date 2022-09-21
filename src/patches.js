@@ -299,7 +299,7 @@ const changeElevatedAngle = {
 }
 
 const changeDeliriumSkylineAngle = {
-  description: 'Changes the hold angle above level for Delirium',
+  description: 'Changes the hold angle above level for Delirium / Skyline',
   args: {
     deliriumSkylineAngle: {
       description: 'Angle above level for going forwards (up to 32.00 degrees)',
