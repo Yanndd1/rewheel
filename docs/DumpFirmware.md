@@ -46,8 +46,8 @@ The current steps are technically dense and not for the faint of heart. There's 
 | Not Reset | NRST | 7 | 14 |
 | SWD IO | PA13 / SWDIO / JTMS | 46 | 72 |
 | SWD Clock | PA14 / SWCLK / JTCK | 49 | 76 |
-| USART1 Transmit | PB6 / USART1_TX | 58 | 92 |
-| USART1 Receive | PB7 / USART1_RX | 59 | 93 |
+| USART1 Transmit | PA9 / USART1_TX | 42 | 68 |
+| USART1 Receive | PA10 / USART1_RX | 43 | 69 |
 | BOOT0 | BOOT0 | 60 | 94 |
 | BOOT1 | PB2 / BOOT1 | 28 | 37 |
 
