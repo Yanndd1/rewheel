@@ -30,7 +30,7 @@ Restores serial number and mileage after the flash has been wiped (required to d
 Resolves Error 22 by removing the BMS serial ID check.
 
 #### `convertPintModeBehaviorToXR`
-Adapts the riding characteristics of the XR for all Pint riding modes
+Converts Pint riding mode behavior into the equivalent for the XR
 
 #### `changeElevatedAngle`
 Changes for forward and backward angles for Elevated mode
