@@ -4,16 +4,20 @@ const patches = require('./patches')
 const { checksumForFirmware, matchFirmwareRevision } = require('./utils/generate-checksum')
 const args = require('minimist')(argv.slice(2))
 
+console.log('\x1b[1mOnewheel Firmware Patcher\x1b[0m')
+
 const printUsage = () => {
+  console.log('\x1b[1mUsage: yarn patcher -i [input file] -o [output file] [...patches] --[patch args]\x1b[0m')
+  console.log('\nAvailable Patches:')
   // list out all available patches
   for (let patch of Object.keys(patches)) {
-    console.log(`\x1b[32m${patch}\x1b[0m - ${patches[patch].description}`)
+    console.log(`\x1b[32m  ${patch}\x1b[0m - ${patches[patch].description}`)
     const args = patches[patch].args
 
     // list out args
     if (args) {
       for (let arg of Object.keys(args)) {
-        console.log(` - \x1b[33m${arg}\x1b[0m:${args[arg].required ? '' : ' \x1b[2m(optional)\x1b[0m'} ${args[arg].description}`)
+        console.log(`   - \x1b[33m${arg}\x1b[0m:${args[arg].required ? '' : ' \x1b[2m(optional)\x1b[0m'} ${args[arg].description}`)
       }
     }
   }
@@ -92,7 +96,7 @@ try {
 
   if (appliedPatches > 0) {
     fs.writeFileSync(outputPath, firmware)
-    console.log('complete. patched binary saved as', outputPath)
+    console.log('\x1b[1mcomplete. patched binary saved as', outputPath, '\x1b[0m')
   }
   else {
     console.warn('\x1b[33mno valid patches applied\x1b[0m')
