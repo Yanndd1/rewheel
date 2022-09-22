@@ -19,75 +19,73 @@ const removeBmsIdCheck = {
   ]
 }
 
-const convertRedwoodToSequoia = {
-  description: `Gives Pint's Redwood the characteristics of XR's Sequoia`,
-  modifications: [
-    {
-      start: {
-        5046: 0xA912
-      },
-      data: [0x33, 0x40]
-    }
-  ]
-}
+const convertRedwoodToSequoia = [
+  {
+    start: {
+      5046: 0xA912
+    },
+    data: [0x33, 0x40]
+  }
+]
 
-const convertSkylineToDelirium = {
-  description: `Gives Pint's Skyline the characteristics of XR's Delirium`,
-  modifications: [
-    {
-      start: {
-        5046: 0xAAFE
-      },
-      data: [0x0A]
+const convertSkylineToDelirium = [
+  {
+    start: {
+      5046: 0xAAFE
     },
-    {
-      start: {
-        5046: 0xAAE2
-      },
-      data: [0x88, 0x30]
+    data: [0x0A]
+  },
+  {
+    start: {
+      5046: 0xAAE2
     },
-    {
-      start: {
-        5046: 0xAAe6
-      },
-      data: [0x84, 0x71]
+    data: [0x88, 0x30]
+  },
+  {
+    start: {
+      5046: 0xAAe6
     },
-    {
-      start: {
-        5046: 0xAB36
-      },
-      data: [0x0A]
-    }
-  ]
-}
+    data: [0x84, 0x71]
+  },
+  {
+    start: {
+      5046: 0xAB36
+    },
+    data: [0x0A]
+  }
+]
 
-const convertPintModesToXRModes = {
-  description: `Gives Pint's Pacific and Elevated the characteristics of XR's Mission and Elevated`,
-  modifications: [
-    {
-      start: {
-        5046: 0xA9A6
-      },
-      data: [0x0A]
-    }
-  ]
-}
-
-const increasePintAggressiveness = {
-  description: `Gives the Pint the base aggressiveness of the XR (maybe top speed too?)`,
-  modifications: [
-    {
-      start: {
-        5046: 0xC3F6
-      },
-      data: [0xA4, 0x61]
+const convertPintModesToXRModes = [
+  {
+    start: {
+      5046: 0xA9A6
     },
-    {
-      start: {
-        5046: 0xC3FA
-      },
-      data: [0x61, 0x72]
-    }
+    data: [0x0A]
+  }
+]
+
+const increasePintAggressiveness = [
+  {
+    start: {
+      5046: 0xC3F6
+    },
+    data: [0xA4, 0x61]
+  },
+  {
+    start: {
+      5046: 0xC3FA
+    },
+    data: [0x61, 0x72]
+  }
+]
+
+const convertPintModeBehaviorToXR = {
+  description: `Converts the behavior of Pint riding modes to behave like the XR`,
+  modifications: [
+    ...convertPintModesToXRModes,
+    ...convertRedwoodToSequoia,
+    ...convertSkylineToDelirium,
+    ...increasePintAggressiveness,
   ]
 }
 
@@ -348,10 +346,7 @@ const changeDeliriumSkylineAngle = {
 module.exports = {
   removeBmsIdCheck,
   restoreData,
-  convertRedwoodToSequoia,
-  convertSkylineToDelirium,
-  convertPintModesToXRModes,
-  increasePintAggressiveness,
+  convertPintModeBehaviorToXR,
   enablePintCustomShaping,
   changeElevatedAngle,
   changeDeliriumSkylineAngle,

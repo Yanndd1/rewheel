@@ -29,17 +29,8 @@ Restores serial number and mileage after the flash has been wiped (required to d
 #### `removeBmsIdCheck`
 Resolves Error 22 by removing the BMS serial ID check.
 
-#### `convertRedwoodToSequoia`
-Converts the Pint's Redwood riding mode into the XR's Sequoia riding mode.
-
-#### `convertSkylineToDelirium`
-Converts the Pint's Skyline riding mode into the XR's Delirium riding mode.
-
-#### `convertPintModesToXRModes`
-Converts the Pint's Pacific and Elevated riding modes into the XR's Mission and Elevated riding modes.
-
-#### `increasePintAggressiveness`
-Increases the base level aggressiveness for the Pint to match the XR (potentially affects speed?).
+#### `convertPintModeBehaviorToXR`
+Adapts the riding characteristics of the XR for all Pint riding modes
 
 #### `changeElevatedAngle`
 Changes for forward and backward angles for Elevated mode
