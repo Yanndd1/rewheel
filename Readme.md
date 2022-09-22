@@ -45,15 +45,15 @@ Increases the base level aggressiveness for the Pint to match the XR (potentiall
 Changes for forward and backward angles for Elevated mode
 
 ##### Arguments
-- `elevatedAngle` - Angle above level for going forwards (up to 32.00 degrees)
-- `elevatedBackwardAngle` - (optional) Angle above level for going backwards. Forward angle is used if not provided.
+- `elevatedAngle` - Angle above / below level for going forwards (up to +-32.00 degrees)
+- `elevatedBackwardAngle` - (optional) Angle above / below level for going backwards. Forward angle is used if not provided.
 
 #### `changeDeliriumSkylineAngle`
 Changes the hold angle above level for Delirium / Skyline
 
 ##### Arguments
-- `deliriumSkylineAngle` - Angle above level for going forwards (up to 32.00 degrees)
-- `deliriumSkylineBackwardAngle` - (optional) Angle above level for going backwards. Forward angle is used if not provided.
+- `deliriumSkylineAngle` - Angle above / below level for going forwards (up to +-32.00 degrees)
+- `deliriumSkylineBackwardAngle` - (optional) Angle above / below level for going backwards. Forward angle is used if not provided.
 
 #### `enablePintCustomShaping`
 Allows Pint to toggle into custom shaping (untested, probably still needs some work)
