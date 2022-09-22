@@ -91,7 +91,7 @@ const increasePintAggressiveness = {
   ]
 }
 
-const enableCustomShaping = {
+const enablePintCustomShaping = {
   description: `Allows the Pint to toggle in Custom Shaping mode`,
   modifications: [
     {
@@ -352,7 +352,7 @@ module.exports = {
   convertSkylineToDelirium,
   convertPintModesToXRModes,
   increasePintAggressiveness,
-  enableCustomShaping,
+  enablePintCustomShaping,
   changeElevatedAngle,
   changeDeliriumSkylineAngle,
 }

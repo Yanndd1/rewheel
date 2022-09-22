@@ -55,7 +55,7 @@ Changes the hold angle above level for Delirium / Skyline
 - `deliriumSkylineAngle` - Angle above level for going forwards (up to 32.00 degrees)
 - `deliriumSkylineBackwardAngle` - (optional) Angle above level for going backwards. Forward angle is used if not provided.
 
-#### `enableCustomShaping`
+#### `enablePintCustomShaping`
 Allows Pint to toggle into custom shaping (untested, probably still needs some work)
 
 ## Firmware Operations
