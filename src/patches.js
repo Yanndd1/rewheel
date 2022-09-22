@@ -216,8 +216,14 @@ const restoreMileage = (mileage) => {
   ]
 }
 
-const getAngleScalarAndRemainder = (angle, isNegative = false) => {
-  const normalized = isNegative ? 36000 - (angle * 100) : (angle * 100) + 36000
+/*
+calculate angles:
+(angle * 100) + 36000 / 256 => store in first byte
+(angle * 100) + 36000 % 256 => store in second byte
+*/
+
+const getAngleScalarAndRemainder = (angle) => {
+  const normalized = (angle * 100) + 36000
   const scalar = Math.floor(normalized / 256) - 0x80  // - 0x80 hack. works for now but need to figure out actual math
   const remainder = normalized % 256
   return { scalar, remainder }
@@ -233,11 +239,11 @@ const getAngleAndBackwardAngle = (angle, backwardAngle) => {
 
   printArgs({ angle, backwardAngle })
 
-  if (angle < 0 || angle > 32.00 || isNaN(angle))
-    throw `invalid angle: ${angle}. Must be between 0 and 32`
+  if (angle < -32.00 || angle > 32.00 || isNaN(angle))
+    throw `invalid angle: ${angle}. Must be between -32 and 32`
 
-  if (backwardAngle < 0 || backwardAngle > 32.00 || isNaN(backwardAngle))
-    throw `invalid backward angle: ${backwardAngle}. Must be between 0 and 32`
+  if (backwardAngle < -32.00 || backwardAngle > 32.00 || isNaN(backwardAngle))
+    throw `invalid backward angle: ${backwardAngle}. Must be between -32 and 32`
 
   angle = getAngleScalarAndRemainder(angle)
   backwardAngle = getAngleScalarAndRemainder(backwardAngle, true)
@@ -245,21 +251,15 @@ const getAngleAndBackwardAngle = (angle, backwardAngle) => {
   return { angle, backwardAngle }
 }
 
-/*
-calculate angles:
-(angle * 100) + 36000 / 256 => store in first byte
--36000 - (angle * 100) % 256 => store in second byte
-*/
-
 const changeElevatedAngle = {
   description: 'Changes the hold angle above level for Elevated',
   args: {
     elevatedAngle: {
-      description: 'Angle above level for going forwards (up to 32.00 degrees)',
+      description: 'Angle above / below level for going forwards (up to +-32.00 degrees)',
       required: true
     },
     elevatedBackwardAngle: {
-      description: 'Angle above level for going backwards. Forward angle is used if not provided.',
+      description: 'Angle above / below level for going backwards. Forward angle is used if not provided.',
       required: false
     }
   },
