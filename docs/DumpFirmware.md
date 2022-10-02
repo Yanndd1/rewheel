@@ -65,6 +65,6 @@ Note: it's helpful to use a breadboard with Power + Ground rails to simplify wir
 
 5. Clean up the file using a text editor. Remove extra spaces from the top and bottom (including the help / title content). Your first line of the file should be the first line of the dump and the last line of the file should be the last line of the dump.
 
-6. Run the log file through `xd` to convert it into a binary file: `xd -r -p dump.log app.bin`
+6. Run the log file through `xxd` to convert it into a binary file: `xxd -r -p dump.log app.bin`
 
 Complete! Now you've got a binary dump from your Onewheel :)
