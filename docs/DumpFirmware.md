@@ -54,7 +54,8 @@ The current steps are technically dense and not for the faint of heart. There's 
 Note: it's helpful to use a breadboard with Power + Ground rails to simplify wiring of the 3V3 and GND lines
 
 4. Connect to the your Pint / XR controller STM32 inside of the programming socket using OpenOCD. You need to load the exploit (shellcode.bin) as outlined in the H3 exploit instructions (copied here for reference):
-  - `telnet localhost 4444` (or whatever port you're using for OpenOCD's debugger)
+  - `openocd -f interface/stlink.cfg -f target/stm32f1x.cfg`
+  - From another terminal window, `telnet localhost 4444` (or whatever port you're using for OpenOCD's debugger)
   - `load_image shellcode.bin 0x20000000` (you need shellcode.bin from the `h3/rootshell` directory of the f103-analysis repo)
 
 4. Use a serial monitor to capture serial communication with the chip to a file. I used the PlatformIO serial monitor with the log2file filter to save the serial communication to a file. This can be done with `pio device monitor -b 9600 -f log2file`
