@@ -5,8 +5,10 @@ const checksums = require('../checksums.json')
 
 const checksumForFirmware = (algorithm, buffer) => {
   const shaSum = crypto.createHash(algorithm)
-  const view = new DataView(buffer, 0, 0xFBFF)
+  // from start of main function to before flash preferences
+  const view = new DataView(buffer, 0x3000, 0xFBFF)
   shaSum.update(view)
+
   return shaSum.digest('hex')
 }
 

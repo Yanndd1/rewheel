@@ -1,7 +1,7 @@
 {
   "scripts": {
     "patcher": "node src/index",
-    "checksum": "node src/generate-checksum"
+    "checksum:generate": "node src/generate-checksum"
   },
   "dependencies": {
     "minimist": "^1.2.6"

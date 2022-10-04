@@ -80,7 +80,7 @@ const increasePintAggressiveness = [
 ]
 
 const convertPintModeBehaviorToXR = {
-  description: `Converts the behavior of Pint riding modes to behave like the XR`,
+  description: `Converts Pint riding mode behavior into the equivalent for the XR`,
   modifications: [
     ...convertPintModesToXRModes,
     ...convertRedwoodToSequoia,
