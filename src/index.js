@@ -4,7 +4,7 @@ const patches = require('./patches')
 const { checksumForFirmware, matchFirmwareRevision } = require('./utils/generate-checksum')
 const args = require('minimist')(argv.slice(2))
 
-console.log('\x1b[1mOnewheel Firmware Patcher\x1b[0m')
+console.log('\x1b[1mOneWheel Firmware Patcher\x1b[0m')
 
 const printUsage = () => {
   console.log('\x1b[1mUsage: yarn patcher -i [input file] -o [output file] [...patches] --[patch args]\x1b[0m')
