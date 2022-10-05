@@ -34,6 +34,9 @@ const applyPatch = (firmware, revision, patch) => {
     modifications = patch.modifications
 
   for (let mod of modifications) {
+    if (!mod.start[revision])
+      throw `this patch does not support firmware revision ${revision}`
+
     for (let offset = 0; offset < mod.data.length; offset++) {
       firmware.writeUInt8(mod.data[offset], mod.start[revision] + offset)
     }
@@ -90,7 +93,6 @@ try {
     }
     catch (err) {
       console.error(`\x1b[31merror applying patch (${index + 1}/${requestedOperations.length}) - \x1b[32m${operation}\x1b[37m: ${err}\x1b[0m`)
-      console.error(err.stack)
     }
   })
 
