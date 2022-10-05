@@ -9,6 +9,7 @@ console.log('\x1b[1mOneWheel Firmware Patcher\x1b[0m')
 const printUsage = () => {
   console.log('\x1b[1mUsage: yarn patcher -i [input file] -o [output file] [...patches] --[patch args]\x1b[0m')
   console.log('\nAvailable Patches:')
+
   // list out all available patches
   for (let patch of Object.keys(patches)) {
     console.log(`\x1b[32m  ${patch}\x1b[0m - ${patches[patch].description}`)
