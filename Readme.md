@@ -84,7 +84,7 @@ npm run checksum:generate -- -i [input file]
 # or
 
 # yarn
-yarn checksum -i [input file]
+yarn checksum:generate -i [input file]
 ```
 
 The patcher uses the checksum of the firmware to set the offsets of each firmware patch.
