@@ -30,8 +30,6 @@ You'll find all patches you can use with the firmware patcher here. More to come
 
 Restores serial number and mileage after the flash has been wiped (required to disable Read Out Protection)
 
-##### Arguments
-
 - `serialNumber` - (optional) 6 digit serial number preceded by OW (e.g. OW123456)
 - `mileage` - (optional) lifetime odometer reading in miles
 
@@ -47,16 +45,12 @@ Converts Pint riding mode behavior into the equivalent for the XR
 
 Changes for forward and backward angles for Elevated mode
 
-##### Arguments
-
 - `elevatedAngle` - Angle above / below level for going forwards (up to +-32.00 degrees)
 - `elevatedBackwardAngle` - (optional) Angle above / below level for going backwards. Forward angle is used if not provided.
 
 #### `changeDeliriumSkylineAngle`
 
 Changes the hold angle above level for Delirium / Skyline
-
-##### Arguments
 
 - `deliriumSkylineAngle` - Angle above / below level for going forwards (up to +-32.00 degrees)
 - `deliriumSkylineBackwardAngle` - (optional) Angle above / below level for going backwards. Forward angle is used if not provided.
